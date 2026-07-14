@@ -1,0 +1,44 @@
+
+body {
+    border: 1px solid black;
+    padding:10px;
+    height: 600px;
+    width: 800px;
+}
+
+.container {
+    display: grid;
+    grid-template: 500px 25px / auto auto auto;
+    padding: 10px;
+    column-gap: 5px;
+    row-gap: 20px;
+}
+
+.container button {
+    align-self: end;
+    width: 100px;
+}
+
+.container span {
+    border: 1px solid black;
+    font-size: 12px;
+    text-align:start;
+    align-self: start;
+    padding: 5px;
+    min-height: 500px;
+    max-height: 500px;
+    min-width: 200px;
+    max-width: 200px;
+    overflow-y: scroll
+}
+
+.container output {
+    height:500px;
+    width:200px;
+    border: 1px solid black;
+    font-size: 12px;
+    text-align:start;
+    align-self:start;
+    padding: 5px;
+    overflow-y: scroll
+}
