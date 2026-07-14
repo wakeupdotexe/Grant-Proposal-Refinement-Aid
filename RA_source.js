@@ -382,7 +382,7 @@ const bannedWords = [
         "women in leadership"
     ];
 
-export function cleanBannedWords() {
+function cleanBannedWords() {
     const wordsCleaned = []
     for (let i = 0; i < bannedWords.length; i++) {
         wordsCleaned[i] = allWords[i].trim().toLowerCase();
@@ -391,17 +391,14 @@ export function cleanBannedWords() {
 }
 
 
-export function clickAction() {
+function clickAction() {
     console.log('button clicked');
-    let userProp = document.getElementById('user-input').value;
-    //let recieved = wordSearch(userProp);
-    document.getElementById('output')
-        .innerText = userProp;
-    
+    const userProp = document.getElementById('user-input').innerText.toString();
+    document.getElementById('output').innerText = userProp;
     console.log(userProp);
 }
 
-export function wordSearch(toSearch) {
+function wordSearch(toSearch) {
     let foundWords = [];
     let revisedProp = toSearch.toLowerCase();
     for (let i = 0; i < bannedWords.length; i++) {
@@ -417,7 +414,7 @@ export function wordSearch(toSearch) {
     return revisedProp;
 }
 
-export function formatFoundWords(foundWords) {
+function formatFoundWords(foundWords) {
     for (let i = 0; i < foundWords.length; i++) {
         const word = foundWords[i][0];
         const count = foundWords[i][1];
