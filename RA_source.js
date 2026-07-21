@@ -336,9 +336,6 @@ const bannedWords = [
         "tax subsidies",
         "they/them",
         "tile drainage",
-        "topics of federal investigations",
-        "topics that have received recent attention from Congress",
-        "topics that have received widespread or critical media attention",
         "trans+",
         "transexual",
         "transexualism",
@@ -378,7 +375,6 @@ const bannedWords = [
         "wind power",
         "woman",
         "women",
-        "women&underrepresented",
         "women in leadership"
     ];
 
@@ -392,22 +388,20 @@ function cleanBannedWords() {
 
 
 function clickAction() {
-    console.log('button clicked');
-    const userProp = document.getElementById('user-input').innerText.toString();
-    document.getElementById('output').innerText = userProp;
-    console.log(userProp);
+    const userProp = document.getElementById('user-input').innerHTML.toString();
+    document.getElementById('output').innerHTML = wordSearch(userProp);
 }
 
 function wordSearch(toSearch) {
     let foundWords = [];
-    let revisedProp = toSearch.toLowerCase();
+    let revisedProp = toSearch;
     for (let i = 0; i < bannedWords.length; i++) {
         const word = bannedWords[i];
         const pattern = new RegExp(word, 'gi');
         if (pattern.test(revisedProp)) {
             found = revisedProp.match(pattern);
             foundWords.push([word, found.length]);
-            revisedProp = revisedProp.replace(pattern, '<strong>' + word + '</strong>');
+            revisedProp = revisedProp.replace(pattern, '<flag>' + word + '</flag>');
         }
     }
     formatFoundWords(foundWords);
@@ -415,12 +409,46 @@ function wordSearch(toSearch) {
 }
 
 function formatFoundWords(foundWords) {
-    for (let i = 0; i < foundWords.length; i++) {
-        const word = foundWords[i][0];
-        const count = foundWords[i][1];
+    document.getElementById("output-list").innerHTML = '';
+    if (foundWords.length > 0) {
+        if (foundWords.length > 1){
+            foundWords = sortFoundWords(foundWords)
+        }
+        for (let i = 0; i < foundWords.length; i++) {
+            const word = foundWords[i][0];
+            const count = foundWords[i][1];
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `${word} (${count})`;
+            document.getElementById('output-list').appendChild(listItem);
+        }
+    } else {
         const listItem = document.createElement('li');
-        listItem.innerHTML = `${word}: ${count}`;
+        listItem.innerHTML = 'No words found';
         document.getElementById('output-list').appendChild(listItem);
     }
+}
 
+function sortFoundWords(foundWords){
+    let tempWords = foundWords;
+    let tempVal;
+    let tempIn;
+    let n = tempWords.length;
+    for(let i = 0; i < n-1; i++){
+        tempVal = tempWords[i][1];
+        tempIn = i;
+        for(let j = i+1; j < n; j++){
+            if (tempWords[j][1] > tempVal){
+                tempVal = tempWords[j];
+                tempIn = j
+            }
+        }
+        console.log(tempVal, tempWords[i][1])
+        if(tempVal != tempWords[i][1]){
+            let xtra = tempWords[i]
+            tempWords[i] = tempWords[tempIn]
+            tempWords[tempIn] = xtra
+        }
+    }
+
+    return tempWords;
 }
