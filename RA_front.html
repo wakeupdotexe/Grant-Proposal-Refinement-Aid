@@ -2,10 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"> 
         <title>Research Proposal Refinement Aid</title>
         <link rel="icon" type="image/svg+xml" href="48 icon.svg">
         <link rel="stylesheet" href="RA_style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
         <script type="text/javascript" src="RA_source.js"></script>
         <noscript>Your browser does not support JavaScript!</noscript>
     </head>
@@ -14,12 +15,24 @@
         <!-- input field -->
         
         <div class="container">
-            <span contenteditable="true" id="user-input" name="prop">Paste your proposal here!</span>
-            <output id="output">Revised text will appear here...</output>
-            <ul id="output-list">
-                <li>No words found</li>
-            </ul>
-            <button id="submit-button" onclick="clickAction()">Submit</button>
+            <div class="columns is-1">
+                <div class="column">
+                <span class="column bordered" contenteditable="true" id="user-input" name="prop">This is a test proposal, feel free to input your proposal here! A person's socioeconomic status, race and ethnicity, gender, and many other factors can influence their physical and mental health outcomes.</span>
+                    <div class="columns">
+                        <div class="column is-one-quarter">
+                        <button class="button is-danger" id="submit-button" onclick="clickAction()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                <output class="column bordered" id="output">Your proposal will be repeated here once you press the submit button, with all flagged terms being shown in <flag>red</flag>.</output>
+                </div>
+                <div class="column is-narrow">
+                <ul class="column bordered" id="output-list">
+                    <li>All words that were flagged from your proposal<br>will be listed here (in order of frequency).</li>
+                </ul>
+                </div>
+            </div>
         </div>
     </body>
 </html>
