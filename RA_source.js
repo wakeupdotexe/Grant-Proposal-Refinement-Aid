@@ -1,4 +1,4 @@
-const bannedWords = [
+let bannedWords = [
         "abortion",
         "accessibility",
         "Accessible",
@@ -21,9 +21,9 @@ const bannedWords = [
         "asexual",
         "assigned at birth",
         "assigned female at birth",
-        "afab+",
+        "afab",
         "assigned male at birth",
-        "amab+",
+        "amab",
         "at risk",
         "autism",
         "aviation fuel",
@@ -52,7 +52,7 @@ const bannedWords = [
         "carbon markets",
         "carbon pricing",
         "carbon sequestration",
-        "CEC+",
+        "CEC",
         "changing climate",
         "chestfeed&people",
         "chestfeed&person",
@@ -92,10 +92,10 @@ const bannedWords = [
         "culturally responsive",
         "decarbonization",
         "definition",
-        "DEI+",
-        "DEIA+",
-        "DEIAB+",
-        "DEIJ+",
+        "DEI",
+        "DEIA",
+        "DEIAB",
+        "DEIJ",
         "diesel",
         "dietary guidelines",
         "ultraprocessed foods",
@@ -124,8 +124,8 @@ const bannedWords = [
         "diversity, equity, and inclusion",
         "diversity efforts",
         "equity efforts",
-        "EEJ+",
-        "EJ+",
+        "EEJ",
+        "EJ",
         "elderly",
         "electric vehicle",
         "emissions",
@@ -157,7 +157,7 @@ const bannedWords = [
         "fostering inclusivity",
         "fuel cell",
         "gay",
-        "GBV+",
+        "GBV",
         "gender",
         "gender based",
         "gender based violence",
@@ -244,10 +244,10 @@ const bannedWords = [
         "minority",
         "minority serving institution",
         "most risk",
-        "MSI+",
-        "msm+",
+        "MSI",
+        "msm",
         "multicultural",
-        "Mx+",
+        "Mx",
         "Native American",
         "NCI budget",
         "net-zero",
@@ -264,15 +264,15 @@ const bannedWords = [
         "oppressive",
         "orientation",
         "pansexual",
-        "PCB+",
+        "PCB",
         "peanut allergies",
         "people&uterus",
         "people of color",
         "people-centered care",
         "person-centered",
         "person-centered care",
-        "PFAS+",
-        "PFOA+",
+        "PFAS",
+        "PFOA",
         "photovoltaic",
         "polarization",
         "political",
@@ -309,7 +309,7 @@ const bannedWords = [
         "segregation",
         "self-assessed",
         "sense of belonging",
-        "sex+",
+        "sex",
         "sexual",
         "sexual preference",
         "sexuality",
@@ -336,7 +336,7 @@ const bannedWords = [
         "tax subsidies",
         "they/them",
         "tile drainage",
-        "trans+",
+        "trans",
         "transexual",
         "transexualism",
         "transgender",
@@ -378,14 +378,13 @@ const bannedWords = [
         "women in leadership"
     ];
 
-function cleanBannedWords() {
-    const wordsCleaned = []
-    for (let i = 0; i < bannedWords.length; i++) {
-        wordsCleaned[i] = allWords[i].trim().toLowerCase();
-    }
-    return wordsCleaned;
-}
+cleanBannedWords()
 
+function cleanBannedWords() {
+    for (let i = 0; i < bannedWords.length; i++) {
+        bannedWords[i] = bannedWords[i].trim().toLowerCase();
+    }
+}
 
 function clickAction() {
     const userProp = document.getElementById('user-input').innerHTML.toString();
@@ -395,12 +394,13 @@ function clickAction() {
 function wordSearch(toSearch) {
     let foundWords = [];
     let revisedProp = toSearch;
-    for (let i = 0; i < bannedWords.length; i++) {
+    for (let i = bannedWords.length-1; i >= 0; i--) {
         const word = bannedWords[i];
         const pattern = new RegExp(word, 'gi');
         if (pattern.test(revisedProp)) {
-            found = revisedProp.match(pattern);
-            foundWords.push([word, found.length]);
+            const found = revisedProp.match(pattern);
+            const item = { term: word, count: found.length }
+            foundWords.push(item);
             revisedProp = revisedProp.replace(pattern, '<flag>' + word + '</flag>');
         }
     }
@@ -412,13 +412,12 @@ function formatFoundWords(foundWords) {
     document.getElementById("output-list").innerHTML = '';
     if (foundWords.length > 0) {
         if (foundWords.length > 1){
-            foundWords = sortFoundWords(foundWords)
+            foundWords.sort(compare);
         }
         for (let i = 0; i < foundWords.length; i++) {
-            const word = foundWords[i][0];
-            const count = foundWords[i][1];
             const listItem = document.createElement('li');
-            listItem.innerHTML = `${word} (${count})`;
+            const format = foundWords[i].term + " (" + String(foundWords[i].count) + ")"
+            listItem.innerHTML = format;
             document.getElementById('output-list').appendChild(listItem);
         }
     } else {
@@ -428,27 +427,16 @@ function formatFoundWords(foundWords) {
     }
 }
 
-function sortFoundWords(foundWords){
-    let tempWords = foundWords;
-    let tempVal;
-    let tempIn;
-    let n = tempWords.length;
-    for(let i = 0; i < n-1; i++){
-        tempVal = tempWords[i][1];
-        tempIn = i;
-        for(let j = i+1; j < n; j++){
-            if (tempWords[j][1] > tempVal){
-                tempVal = tempWords[j];
-                tempIn = j
-            }
-        }
-        console.log(tempVal, tempWords[i][1])
-        if(tempVal != tempWords[i][1]){
-            let xtra = tempWords[i]
-            tempWords[i] = tempWords[tempIn]
-            tempWords[tempIn] = xtra
-        }
-    }
 
-    return tempWords;
+
+
+
+let compare = (a, b) => {
+    if (a.count > b.count){
+        return -1;
+    } else if (a.count == b.count){
+        return a.term.localeCompare(b.term);
+    } else {
+        return 1;
+    }
 }
