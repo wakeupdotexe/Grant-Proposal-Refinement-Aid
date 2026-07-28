@@ -1,0 +1,91 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    padding: 10px;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+
+flag {
+    color: var(--bulma-danger);
+    font-weight: bold;
+}
+
+.container {
+    margin-top: 25px;
+    display: grid;
+    border: 1px solid var(--bulma-link-bold);
+    padding: 10px;
+    row-gap: 10px;
+    column-gap: 10px;
+    min-height: 100vh;
+    min-width: 100vw;
+    position:absolute;
+}
+
+.column button {
+    border: 1px solid var(--bulma-danger-bold);
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    color: var(--bulma-danger-bold);
+    width: 100px;
+    height: 25px;
+    margin-top: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.column span {
+    color: var(--bulma-link-bold);
+    font-size: 12px;
+    font-family:'Times New Roman', Times, serif;
+    text-align:start;
+    align-self: start;
+    padding: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow-y: scroll;
+    width: absolute;
+    max-height: 90vh;
+    overflow-x: hidden;
+    min-height: 15vh;
+}
+
+.column.bordered {
+    border: 1px solid var(--bulma-link-bold);
+}
+
+output {
+    color: var(--bulma-link-bold);
+    font-size: 12px;
+    font-family:'Times New Roman', Times, serif;
+    text-align:start;
+    align-self: start;
+    padding: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    width: absolute;
+    max-height: 90vh;
+    min-height: 15vh;
+}
+
+ul {
+    color: var(--bulma-link-bold);
+    font-size: 12px;
+    font-family:'Times New Roman', Times, serif;
+    text-align:start;
+    align-self: start;
+    padding: 5px;
+    overflow-y: scroll;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: absolute;
+    max-height: 90vh;
+    min-height: 15vh;
+}
